@@ -6,10 +6,7 @@
 # for the latest version and documentation. Please forward all issues and
 # concerns to iphelix [at] thesprawl.org.
 
-DNSCHEF_NAME = "epic-dnschef"
-# Version number formatting
-# Everything before the "R" is the original version this fork is based off
-# Everything after the "R" is the revision version
+DNSCHEF_NAME = "freecurly"
 DNSCHEF_VERSION = "0.4R1"
 
 # Copyright (C) 2019 Peter Kacherginsky, Marcello Salvati
@@ -516,7 +513,7 @@ def start_cooking(interface, nametodns, nameservers, tcp=False, ipv6=False, port
 
 if __name__ == "__main__":
     def genHeader(name):
-        return text2art(name, font="tarty1")+"\n"+text2art("Ver: "+DNSCHEF_VERSION, font="tarty4")+"\n"
+        return text2art(name, font="tarty1")+"\n"
 
     # Parse command line arguments
     parser = ArgumentParser(usage = "dnschef.py [options]:\n" + genHeader(DNSCHEF_NAME), description="DNSChef is a highly configurable DNS Proxy for Penetration Testers and Malware Analysts. It is capable of fine configuration of which DNS replies to modify or to simply proxy with real responses. In order to take advantage of the tool you must either manually configure or poison DNS server entry to point to DNSChef. The tool requires root privileges to run on privileged ports." )
@@ -527,7 +524,7 @@ if __name__ == "__main__":
     fakegroup.add_argument('--fakemail', metavar="mail.fake.com", help='MX name to use for matching DNS queries. If you use this parameter without specifying domain names, then all \'MX\' queries will be spoofed. Consider using --file argument if you need to define more than one MX record.')
     fakegroup.add_argument('--fakealias', metavar="www.fake.com", help='CNAME name to use for matching DNS queries. If you use this parameter without specifying domain names, then all \'CNAME\' queries will be spoofed. Consider using --file argument if you need to define more than one CNAME record.')
     fakegroup.add_argument('--fakens', metavar="ns.fake.com", help='NS name to use for matching DNS queries. If you use this parameter without specifying domain names, then all \'NS\' queries will be spoofed. Consider using --file argument if you need to define more than one NS record.')
-    fakegroup.add_argument('-f', '--file', action='append', help="Specify a file containing a list of DOMAIN=IP pairs (one pair per line) used for DNS responses. You can use this argument more than once to add multiple files For example: google.com=1.1.1.1 will force all queries to 'google.com' to be resolved to '1.1.1.1'. IPv6 addresses will be automatically detected. You can be even more specific by combining --file with other arguments. However, data obtained from the file will take precedence over others.")
+    fakegroup.add_argument('-f', '--file', action='append', default="list", help="Specify a file containing a list of DOMAIN=IP pairs (one pair per line) used for DNS responses. Set to \"lists\" by default. You can use this argument more than once to add multiple files For example: google.com=1.1.1.1 will force all queries to 'google.com' to be resolved to '1.1.1.1'. IPv6 addresses will be automatically detected. You can be even more specific by combining --file with other arguments. However, data obtained from the file will take precedence over others.")
 
     mexclusivegroup = parser.add_mutually_exclusive_group()
     mexclusivegroup.add_argument('--fakedomains', metavar="thesprawl.org,google.com", help='A comma separated list of domain names which will be resolved to FAKE values specified in the the above parameters. All other domain names will be resolved to their true values.')
